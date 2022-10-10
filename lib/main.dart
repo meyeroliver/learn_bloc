@@ -55,12 +55,29 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<CounterCubit, CounterState>(
+            BlocConsumer<CounterCubit, CounterState>(
               builder: (context, state) {
                 return Text(
                   state.counterValue.toString(),
                   style: Theme.of(context).textTheme.headline4,
                 );
+              },
+              listener: (context, state) {
+                if (state.wasIncremented == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Incremented'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Decremented'),
+                      duration: Duration(milliseconds: 300),
+                    ),
+                  );
+                }
               },
             ),
             Row(
